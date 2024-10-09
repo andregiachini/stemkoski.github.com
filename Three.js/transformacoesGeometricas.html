@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transformações com Teclas</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <script>
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+      const material2 = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const material3 = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+      const material4 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+
+      const cube1 = new THREE.Mesh(geometry, material1);
+      const cube2 = new THREE.Mesh(geometry, material2);
+      const cube3 = new THREE.Mesh(geometry, material3);
+      const cube4 = new THREE.Mesh(geometry, material4);
+
+      scene.add(cube1);
+      scene.add(cube2);
+      scene.add(cube3);
+      scene.add(cube4);
+
+      cube1.position.set(-4, 0, 0);
+      cube2.position.set(-2, 0, 0);
+      cube3.position.set(0, 0, 0);
+      cube4.position.set(2, 0, 0);
+
+      camera.position.z = 8;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener("keydown", (event) => {
+        switch (event.key.toLowerCase()) {
+          case "t":
+            cube1.position.x += 0.5;
+            cube1.position.y += 0.5;
+            cube1.position.z += 0.5;
+            break;
+
+          case "e":
+            cube2.scale.x *= 1.1;
+            cube2.scale.y *= 1.1;
+            cube2.scale.z *= 1.1;
+            break;
+
+          case "r":
+            cube3.rotation.x += Math.PI / 8;
+            cube3.rotation.y += Math.PI / 8;
+            cube3.rotation.z += Math.PI / 8;
+            break;
+
+          case "c":
+            cube4.position.x += 0.3;
+            cube4.position.y -= 0.3;
+
+            cube4.scale.set(1.2, 1.2, 1.2);
+
+            cube4.rotation.set(
+              cube4.rotation.x + Math.PI / 10,
+              cube4.rotation.y + Math.PI / 10,
+              cube4.rotation.z + Math.PI / 10
+            );
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>
